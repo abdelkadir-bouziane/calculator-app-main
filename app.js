@@ -1,12 +1,18 @@
 const r = document.querySelector(":root");
 const circle = document.querySelector(".circle");
+const lastScreen = document.querySelector(".last-val");
+const newScreen = document.querySelector(".new-val");
+var lastVal = 0;
+var newVal = 0;
+var operation = "equal";
+
+// change theme
 
 const makeTheme = (theme) => {
   switch (theme) {
     case 1:
       circle.style.setProperty("left", "3px");
       circle.style.setProperty("transform", "translateX(0)");
-
       r.style.setProperty("--main_bg", "hsl(222, 26%, 31%)");
       r.style.setProperty("--toggle_keypad_bg", "hsl(223, 31%, 20%)");
       r.style.setProperty("--screen_bg", "hsl(224, 36%, 15%)");
@@ -24,7 +30,6 @@ const makeTheme = (theme) => {
     case 2:
       circle.style.setProperty("left", "50%");
       circle.style.setProperty("transform", "translateX(-50%)");
-
       r.style.setProperty("--main_bg", "hsl(0, 0%, 90%)");
       r.style.setProperty("--toggle_keypad_bg", "hsl(0, 5%, 81%)");
       r.style.setProperty("--screen_bg", "hsl(0, 0%, 93%)");
@@ -42,7 +47,6 @@ const makeTheme = (theme) => {
     case 3:
       circle.style.setProperty("left", "100%");
       circle.style.setProperty("transform", "translateX(-18px)");
-
       r.style.setProperty("--main_bg", "hsl(268, 75%, 9%)");
       r.style.setProperty("--toggle_keypad_bg", "hsl(268, 71%, 12%)");
       r.style.setProperty("--screen_bg", "hsl(268, 71%, 12%)");
@@ -68,4 +72,111 @@ document.querySelector(".click2").addEventListener("click", function (e) {
 });
 document.querySelector(".click3").addEventListener("click", function (e) {
   makeTheme(3);
+});
+
+// numbers buttons
+
+const tapNum = (num) => {
+  if (newVal != 0 || num != 0) {
+    if (newVal == 0) newScreen.innerHTML = num;
+    else newScreen.innerHTML += num;
+    newVal = newVal * 10 + num;
+  }
+};
+
+document.querySelector(".btn-1").addEventListener("click", function (e) {
+  tapNum(1);
+});
+document.querySelector(".btn-2").addEventListener("click", function (e) {
+  tapNum(2);
+});
+document.querySelector(".btn-3").addEventListener("click", function (e) {
+  tapNum(3);
+});
+document.querySelector(".btn-4").addEventListener("click", function (e) {
+  tapNum(4);
+});
+document.querySelector(".btn-5").addEventListener("click", function (e) {
+  tapNum(5);
+});
+document.querySelector(".btn-6").addEventListener("click", function (e) {
+  tapNum(6);
+});
+document.querySelector(".btn-7").addEventListener("click", function (e) {
+  tapNum(7);
+});
+document.querySelector(".btn-8").addEventListener("click", function (e) {
+  tapNum(8);
+});
+document.querySelector(".btn-9").addEventListener("click", function (e) {
+  tapNum(9);
+});
+document.querySelector(".btn-0").addEventListener("click", function (e) {
+  tapNum(0);
+});
+
+// delete & reset buttons
+
+document.querySelector(".btn-del").addEventListener("click", function (e) {
+  newVal = (newVal - (newVal % 10)) / 10;
+  newScreen.innerHTML = newVal;
+});
+
+document.querySelector(".btn-reset").addEventListener("click", function (e) {
+  newVal = 0;
+  newScreen.innerHTML = newVal;
+});
+
+// operations buttons
+
+const tapOper = (newOperation) => {
+  switch (operation) {
+    case "plus":
+      lastVal += newVal;
+      break;
+    case "minus":
+      lastVal -= newVal;
+      break;
+    case "multiply":
+      lastVal *= newVal;
+      break;
+    case "divide":
+      lastVal /= newVal;
+      break;
+    case "equal":
+      lastVal = newVal;
+      break;
+  }
+
+  if (newOperation == "equal") {
+    newVal = lastVal;
+    newScreen.innerHTML = newVal.toString();
+    lastScreen.style.setProperty("display", "none");
+  } else {
+    newVal = 0;
+    newScreen.innerHTML = "";
+    lastScreen.innerHTML = lastVal.toString();
+    lastScreen.style.setProperty("display", "block");
+  }
+  operation = newOperation;
+};
+
+document.querySelector(".btn-plus").addEventListener("click", function (e) {
+  tapOper("plus");
+});
+
+document.querySelector(".btn-minus").addEventListener("click", function (e) {
+  tapOper("minus");
+});
+
+document.querySelector(".btn-multiply").addEventListener("click", function (e) {
+  tapOper("multiply");
+});
+
+document.querySelector(".btn-divide").addEventListener("click", function (e) {
+  tapOper("divide");
+});
+
+document.querySelector(".btn-equal").addEventListener("click", function (e) {
+  tapOper("equal");
 });
