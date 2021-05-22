@@ -157,11 +157,13 @@ body {
 .screen {
   height: 92px;
   background-color: var(--screen_bg);
-  padding: 20px 20px 10px 20px;
+  padding: 20px 0 10px;
   margin: 30px 0 20px;
   border-radius: 7px;
   text-align: end;
   color: var(--head_txt);
+  overflow: hidden;
+  position: relative;
 
   transition-property: background-color, color;
   transition-duration: 0.1s;
@@ -169,13 +171,17 @@ body {
 }
 
 .last-val {
+  position: absolute;
+  right: 20px;
   font-size: 0.5em;
   opacity: 0.4;
-  margin-bottom: 5px;
   display: none;
 }
 
 .new-val {
+  position: absolute;
+  top: 20px;
+  right: 20px;
   font-size: 1em;
   display: block;
 }

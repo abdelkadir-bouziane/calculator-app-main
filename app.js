@@ -77,10 +77,15 @@ document.querySelector(".click3").addEventListener("click", function (e) {
 // numbers buttons
 
 const tapNum = (num) => {
-  if (newVal != 0 || num != 0) {
-    if (newVal == 0) newScreen.innerHTML = num;
+  let str = newScreen.innerHTML.toString();
+  if (num == ".") {
+    if (!str.includes(".")) newScreen.innerHTML += num;
+  } else if (num == 0) {
+    if (str != "0") newScreen.innerHTML += num;
+  } else {
+    if (str == "0") newScreen.innerHTML = num;
     else newScreen.innerHTML += num;
-    newVal = newVal * 10 + num;
+    newVal = Number(newScreen.innerHTML.toString());
   }
 };
 
@@ -114,17 +119,23 @@ document.querySelector(".btn-9").addEventListener("click", function (e) {
 document.querySelector(".btn-0").addEventListener("click", function (e) {
   tapNum(0);
 });
+document.querySelector(".btn-point").addEventListener("click", function (e) {
+  tapNum(".");
+});
 
 // delete & reset buttons
 
 document.querySelector(".btn-del").addEventListener("click", function (e) {
-  newVal = (newVal - (newVal % 10)) / 10;
-  newScreen.innerHTML = newVal;
+  newScreen.innerHTML = newScreen.innerHTML.slice(0, -1);
+  if (newScreen.innerHTML.toString() == "") newScreen.innerHTML = "0";
+  newVal = Number(newScreen.innerHTML.toString());
 });
 
 document.querySelector(".btn-reset").addEventListener("click", function (e) {
-  newVal = 0;
-  newScreen.innerHTML = newVal;
+  newScreen.innerHTML = "0";
+  lastScreen.style.setProperty("display", "none");
+  newScreen.style.setProperty("top", "20px");
+  newVal = lastVal = 0;
 });
 
 // operations buttons
@@ -152,11 +163,13 @@ const tapOper = (newOperation) => {
     newVal = lastVal;
     newScreen.innerHTML = newVal.toString();
     lastScreen.style.setProperty("display", "none");
+    newScreen.style.setProperty("top", "20px");
   } else {
     newVal = 0;
-    newScreen.innerHTML = "";
+    newScreen.innerHTML = "0";
     lastScreen.innerHTML = lastVal.toString();
     lastScreen.style.setProperty("display", "block");
+    newScreen.style.setProperty("top", "40px");
   }
   operation = newOperation;
 };
