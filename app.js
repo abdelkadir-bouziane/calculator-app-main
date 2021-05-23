@@ -82,6 +82,7 @@ const tapNum = (num) => {
     if (!str.includes(".")) newScreen.innerHTML += num;
   } else if (num == 0) {
     if (str != "0") newScreen.innerHTML += num;
+    newVal = Number(newScreen.innerHTML.toString());
   } else {
     if (str == "0") newScreen.innerHTML = num;
     else newScreen.innerHTML += num;
