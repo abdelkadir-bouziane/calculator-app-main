@@ -24,7 +24,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: default;
+  user-select: none;
 }
 
 body {
@@ -100,30 +100,6 @@ body {
 .theme-btn {
   display: flex;
   flex-direction: column;
-  position: relative;
-}
-
-.click-theme {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  z-index: 1;
-}
-
-.click1,
-.click2,
-.click3 {
-  flex-grow: 1;
-  cursor: pointer;
-}
-
-.numbers {
-  flex-grow: 1;
-  font-size: 0.3em;
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 3px;
 }
 
 .toggle-btn {
@@ -140,10 +116,43 @@ body {
   transition-timing-function: ease-in-out;
 }
 
+.click1,
+.click2,
+.click3 {
+  background-color: white;
+  opacity: 0;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  position: absolute;
+  cursor: pointer;
+
+  transition: opacity 0.3s ease-in-out;
+}
+
+.click1 {
+  left: 3px;
+}
+
+.click2 {
+  right: 50%;
+  transform: translateX(50%);
+}
+
+.click3 {
+  right: 3px;
+}
+
+.click1:hover,
+.click2:hover,
+.click3:hover {
+  opacity: 0.2;
+}
+
 .circle {
   height: 15px;
   width: 15px;
-  border-radius: 50px;
+  border-radius: 50%;
   background-color: var(--equal_bg);
   position: absolute;
   left: 3px;
@@ -152,6 +161,14 @@ body {
   transition-property: left, transform, background-color;
   transition-duration: 0.1s;
   transition-timing-function: ease-in-out;
+}
+
+.numbers {
+  flex-grow: 1;
+  font-size: 0.3em;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 3px;
 }
 
 .screen {
